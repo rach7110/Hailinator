@@ -202,7 +202,9 @@ TWITTER
     exit
 end
 
-unless Twitter.bearer_token?
+Twitter.home_twitter rescue nil
+
+unless Twitter.client?
   step 4
 
   puts <<-AUTHENTICATED
