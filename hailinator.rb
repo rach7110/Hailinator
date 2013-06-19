@@ -8,15 +8,11 @@ Twitter.configure do |config|
   config.oauth_token_secret = "bveLpx0S3pOu5RdYmtklqQJT5HDxDSmyMinJqW5IHM8"
 end
 
-Twitter.search("#haildamage", :count => 3, :result_type => "recent").results.map do |status|
-	puts "#{status.from_user}: #{status.text}"
-	@csv_handle = status.from_user
-	@csv_text = status.text
-end
 
 
-
-CSV.open("hail.csv", "wb") do |csv| #why a loop for the header? what is wb?
+CSV.open("hail.csv", "wb") do |csv| #test with ab
   csv << ["handle", "text", "url"]
-  csv << ["#{@csv_handle}", "#{@csv_text}"]
+  Twitter.search("#haildamage", :count => 30, :result_type => "recent").results.map do |status|
+  csv << ["#{status.from_user}", "#{status.text}"]
+  end
 end
